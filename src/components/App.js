@@ -10,6 +10,7 @@ class App extends Component {
           <h1 className="App-title">My News</h1>
         </header>
         <News />
+        <h1>Powered by NewsAPI.org</h1>
       </div>
     );
   }
