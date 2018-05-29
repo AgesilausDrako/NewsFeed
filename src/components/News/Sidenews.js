@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import NewSingle from './NewSingle';
+import axios from 'axios';
+import SingleSide from './SingleSide';
 import Error from './Error';
 
-class News extends Component {
+
+class Sidenews extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            news: [],
+            sidenews: [],
             error: false,
         };
     }
@@ -14,13 +16,12 @@ class News extends Component {
     componentDidMount() {
         const url = `https://newsapi.org/v2/${this.props.news.type}?${this.props.news.query}&apiKey=88a6c31f3e6b41e6971c6e5ed38f32f3`;
 
-        fetch(url)
+        
+        
+        axios.get(url)
             .then((response) => {
-                return response.json();
-            })
-            .then((data) =>  {
                 this.setState({
-                    news: data.articles
+                    sidenews: response.data.articles
                 })
             })
             .catch((error) => {
@@ -32,21 +33,21 @@ class News extends Component {
 
     renderItems() {
         if (!this.state.error) {
-            return this.state.news.map((item) => (
-                <NewSingle key={item.url} item={item} />
+            return this.state.sidenews.map((item) => (
+                <SingleSide key={item.url} item={item} />
             ));
         } else {
-            return <Error/>
+            return <Error />
         }
     }
 
     render() {
         return (
-            <div className="row">
+            <div>
                 {this.renderItems()}
             </div>
         );
     }
 }
 
-export default News;
+export default Sidenews;
